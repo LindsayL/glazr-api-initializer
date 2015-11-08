@@ -8,46 +8,15 @@
 
   var
     should = require('should'),
-    Persistor = require('../../../Interface.js');
+    ApiInitializer = require('../../../ApiInitializer.js');
 
-  describe('SPEC.Interface', function () {
+  describe.only('SPEC.ApiInitializer', function () {
     var
-      NO_ID_CODE = 'NOID',
-      persistor;
-
+      apiInitializer;
     describe('Instantiation', function () {
-      it('should throw an error if no options specified', function () {
-        try {
-          persistor = new Persistor();
-          should.not.exist('should not get here, should have thrown an error');
-        } catch (e) {
-          e.message.should.match(/options/);
-        }
-      });
-      it('should throw an error if no type specified', function () {
-        try {
-          persistor = new Persistor({});
-          should.not.exist('should not get here, should have thrown an error');
-        } catch (e) {
-          e.message.should.match(/type/);
-        }
-      });
-      it('should throw an error if no config specified', function () {
-        try {
-          persistor = new Persistor({type: 'LocalFile'});
-          should.not.exist('should not get here, should have thrown an error');
-        } catch (e) {
-          e.message.should.match(/config/);
-        }
-      });
-      it('should throw an error if invalid type specified', function () {
-        try {
-          persistor = new Persistor({config: {}, type: 'bet this doesnt exist'});
-          should.not.exist('should not get here, should have thrown an error');
-        } catch (e) {
-          /*jslint regexp: true*/
-          e.message.should.match(/Invalid options.type/);
-        }
+      it('should instantiate', function () {
+        apiInitializer = new ApiInitializer();
+        should.exist(apiInitializer);
       });
     });
 
@@ -58,27 +27,44 @@
         myCallback = function (err) {};
 
       beforeEach(function () {
-        // Init the persistor with some valid options, but will override
-        sinon.stub(Persistor.prototype, 'getAdapter', function () {
-          return {
-            create: {},
-            get: {},
-            getAll: {},
-            update: {},
-            remove: {}
-          };
-        });
-        persistor = new Persistor();
+        apiInitializer = new ApiInitializer();
       });
 
-      describe('#create(record, callback)', function () {
-        it('should call the adapters create method with the same args', function (done) {
-          sinon.stub(persistor.adapter, 'create', function (record, callback) {
-            JSON.stringify(record).should.equal(JSON.stringify(myItem));
-            String(callback).should.equal(String(myCallback));
-            done();
+      describe('#initComponenets(apiName, orgConfig, apiThisObject, requiredComponents)', function () {
+        describe('request unsupported component', function () {
+          it('should throw an error', function (done) {
+            try {
+              apiInitializer.initComponents('blah', {}, {}, ['unsupportedComponent']);
+            } catch (e) {
+              should.exist(e);
+              done();
+            }
           });
-          persistor.create(myItem, myCallback);
+        });
+        describe('no required components', function () {
+          it('should not modifiy the thisObject', function () {
+            var
+              originalThis = JSON.stringify({}),
+              thisObject = JSON.parse(originalThis);
+            apiInitializer.initComponents('blah', {}, thisObject, []);
+            JSON.stringify(thisObject).should.equal(originalThis);
+          });
+        });
+        describe('one required components', function () {
+          it('should add the required component to the thisObject', function () {
+            var
+              reqComp = 'reqComp',
+              originalThis = JSON.stringify({}),
+              thisObject = JSON.parse(originalThis);
+            apiInitializer.reqComp = function (apiName) {
+              return apiName;
+            };
+            apiInitializer.initComponents('blah', {}, thisObject, [reqComp]);
+            // Modifiy originalThis to the expected output
+            originalThis = JSON.parse(originalThis);
+            originalThis[reqComp] = reqComp;
+            JSON.stringify(thisObject).should.equal(JSON.stringify(originalThis));
+          });
         });
       });
 
