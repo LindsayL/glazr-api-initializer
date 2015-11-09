@@ -12,7 +12,7 @@
    * @constructor
    */
   var EmailIntegrator = function (config) {
-
+      this.type = 'Email';
       this.config = config;
       this.nodemailer = require('nodemailer');
     };
