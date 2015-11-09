@@ -47,6 +47,7 @@
       Persistor = require('glazr-persistor');
 
     config = orgConfig[apiName].persistor || orgConfig.persistor || {type: 'MultiFile'};
+    config.config = config.config || {};
 
     // In the case of these implementations create the default path.
     if (config.type === 'LocalFile') {
