@@ -82,7 +82,7 @@
       };
     }
 
-    CaseIntegrator = require(path.join(__dirname, '../integrator', config.type));
+    CaseIntegrator = require(path.join('./integrator', config.type));
 
     config.config.caseViewUrl = orgConfig.Triage['triage-view-url'] + orgConfig.organization + 'case';
 
