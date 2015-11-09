@@ -1,0 +1,26 @@
+{
+  "name": "glazr-api-initializer",
+  "version": "0.0.4",
+  "description": "Utility function for initializing glazr Api's.",
+  "main": "ApiInitializer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "glazr",
+    "api",
+    "initializer"
+  ],
+  "author": "glazr",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "glazr-utils": "Glazr/glazr-utils",
+    "glazr-persistor": "Glazr/glazr-persistor",
+    "path": "^0.11.14"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "should": "^7.0.4",
+    "sinon": "^1.16.1"
+  }
+}
