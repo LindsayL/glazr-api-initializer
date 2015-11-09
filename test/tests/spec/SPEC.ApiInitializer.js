@@ -10,7 +10,7 @@
     should = require('should'),
     ApiInitializer = require('../../../ApiInitializer.js');
 
-  describe.only('SPEC.ApiInitializer', function () {
+  describe('SPEC.ApiInitializer', function () {
     var
       apiInitializer;
     describe('Instantiation', function () {

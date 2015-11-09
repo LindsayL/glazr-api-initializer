@@ -1,6 +1,6 @@
 {
   "name": "glazr-api-initializer",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Utility function for initializing glazr Api's.",
   "main": "ApiInitializer.js",
   "scripts": {
@@ -16,6 +16,7 @@
   "dependencies": {
     "glazr-utils": "Glazr/glazr-utils",
     "glazr-persistor": "Glazr/glazr-persistor",
+    "nodemailer": "~1.4.0",
     "path": "^0.11.14"
   },
   "devDependencies": {
