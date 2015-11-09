@@ -102,7 +102,7 @@
     this.checkFor(['triage-view-url']);
     this.checkFor(['organization']);
     config.config = config.config || {};
-    config.config.caseViewUrl = orgConfig['triage-view-url'] + orgConfig.organization + 'case';
+    config.config.caseViewUrl = orgConfig['triage-view-url'] + '/' + orgConfig.organization + '/case';
 
     return new CaseIntegrator(config.config);
   };
