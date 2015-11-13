@@ -13,6 +13,7 @@
   describe('INTEGRATION', function () {
     var
       config,
+      appName = 'blehApp',
       apiName = 'blahApi',
       thisObject,
       apiInitializer;
@@ -33,7 +34,7 @@
         describe('with minimal orgConfig', function () {
           it('should initialize the default persistor', function () {
             apiInitializer = new ApiInitializer(config);
-            apiInitializer.initComponents(apiName, thisObject, ['persistor']);
+            apiInitializer.initComponents(appName, apiName, thisObject, ['persistor']);
             should.exist(thisObject.persistor);
             //Check that it is MultiFile
             thisObject.persistor.adapter.type.should.equal('MultiFile');
@@ -45,20 +46,21 @@
               type: 'LocalFile'
             };
             apiInitializer = new ApiInitializer(config);
-            apiInitializer.initComponents(apiName, thisObject, ['persistor']);
+            apiInitializer.initComponents(appName, apiName, thisObject, ['persistor']);
             should.exist(thisObject.persistor);
             thisObject.persistor.adapter.type.should.equal('LocalFile');
           });
         });
         describe('with api specific config', function () {
           it('should initialize the api specific persistor', function () {
-            config[apiName] = {
+            config[appName] = {};
+            config[appName][apiName] = {
               persistor: {
                 type: 'LocalFile'
               }
             };
             apiInitializer = new ApiInitializer(config);
-            apiInitializer.initComponents(apiName, thisObject, ['persistor']);
+            apiInitializer.initComponents(appName, apiName, thisObject, ['persistor']);
             should.exist(thisObject.persistor);
             thisObject.persistor.adapter.type.should.equal('LocalFile');
           });
@@ -68,14 +70,13 @@
       describe('request caseIntegrator component', function () {
         beforeEach(function () {
           config = {
-            organization: 'BlahLtd',
-            'triage-view-url': 'somewhere'
+            organization: 'BlahLtd'
           };
         });
         describe('with minimal orgConfig', function () {
           it('should initialize the default caseIntegrator', function () {
             apiInitializer = new ApiInitializer(config);
-            apiInitializer.initComponents(apiName, thisObject, ['caseIntegrator']);
+            apiInitializer.initComponents(appName, apiName, thisObject, ['caseIntegrator']);
             should.exist(thisObject.caseIntegrator);
             //Check that it is MultiFile
             thisObject.caseIntegrator.type.should.equal('Empty');
@@ -84,23 +85,30 @@
         describe('with default orgConfig', function () {
           it('should initialize the orgConfigs default caseIntegrator', function () {
             config.caseIntegrator = {
-              type: 'Email'
+              type: 'Email',
+              config: {
+                'triage-view-url': 'somewhere'
+              }
             };
             apiInitializer = new ApiInitializer(config);
-            apiInitializer.initComponents(apiName, thisObject, ['caseIntegrator']);
+            apiInitializer.initComponents(appName, apiName, thisObject, ['caseIntegrator']);
             should.exist(thisObject.caseIntegrator);
             thisObject.caseIntegrator.type.should.equal('Email');
           });
         });
         describe('with api specific config', function () {
           it('should initialize the api specific caseIntegrator', function () {
-            config[apiName] = {
+            config[appName] = {};
+            config[appName][apiName] = {
               caseIntegrator: {
-                type: 'Email'
+                type: 'Email',
+                config: {
+                  'triage-view-url': 'somewhere'
+                }
               }
             };
             apiInitializer = new ApiInitializer(config);
-            apiInitializer.initComponents(apiName, thisObject, ['caseIntegrator']);
+            apiInitializer.initComponents(appName, apiName, thisObject, ['caseIntegrator']);
             should.exist(thisObject.caseIntegrator);
             thisObject.caseIntegrator.type.should.equal('Email');
           });

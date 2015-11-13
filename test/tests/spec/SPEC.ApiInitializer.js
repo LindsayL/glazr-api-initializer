@@ -44,7 +44,7 @@
         describe('request unsupported component', function () {
           it('should throw an error', function (done) {
             try {
-              apiInitializer.initComponents('blah', {}, ['unsupportedComponent']);
+              apiInitializer.initComponents('blah', 'bleh', {}, ['unsupportedComponent']);
             } catch (e) {
               should.exist(e);
               done();
@@ -58,7 +58,7 @@
             var
               originalThis = JSON.stringify({}),
               thisObject = JSON.parse(originalThis);
-            apiInitializer.initComponents('blah', thisObject, []);
+            apiInitializer.initComponents('blah', 'bleh', thisObject, []);
             JSON.stringify(thisObject).should.equal(originalThis);
           });
         });
@@ -69,10 +69,11 @@
               reqComp = 'reqComp',
               originalThis = JSON.stringify({}),
               thisObject = JSON.parse(originalThis);
-            apiInitializer.reqComp = function (apiName) {
+            apiInitializer.reqComp = function (appName, apiName) {
+              /*jslint unparam:true*/
               return apiName;
             };
-            apiInitializer.initComponents(api, thisObject, [reqComp]);
+            apiInitializer.initComponents('bleh', api, thisObject, [reqComp]);
             // Modifiy originalThis to the expected output
             originalThis = JSON.parse(originalThis);
             originalThis[reqComp] = api;
