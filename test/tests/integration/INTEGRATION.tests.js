@@ -87,7 +87,7 @@
             config.caseIntegrator = {
               type: 'Email',
               config: {
-                'triage-view-url': 'somewhere'
+                'captureViewUrl': 'somewhere'
               }
             };
             apiInitializer = new ApiInitializer(config);
@@ -103,7 +103,7 @@
               caseIntegrator: {
                 type: 'Email',
                 config: {
-                  'triage-view-url': 'somewhere'
+                  'captureViewUrl': 'somewhere'
                 }
               }
             };
