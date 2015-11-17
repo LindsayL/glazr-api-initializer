@@ -79,19 +79,19 @@
     return new Persistor(config);
   };
 
-  ApiInitializer.prototype.caseIntegrator = function (appName, apiName) {
+  ApiInitializer.prototype.integrator = function (appName, apiName) {
     var
       orgConfig = this.orgConfig,
       config,
       CaseIntegrator;
 
-    config = orgConfig[appName][apiName].caseIntegrator || orgConfig.caseIntegrator;
+    config = orgConfig[appName][apiName].integrator || orgConfig.integrator;
 
     if (!config || !config.type) {
       // Return an empty integrator
       return {
         type: 'Empty',
-        createCase: function (id, title, description, callback) {
+        create: function (id, title, description, callback) {
           /*jslint unparam:true*/
           if (callback) {
             callback(null, id);

@@ -5,7 +5,7 @@
   /**
    *
    * @param config
-   * @param config.baseUrl - the base url for viewing the case (the case id will be appended)
+   * @param config.baseUrl - the base url for viewing the document (the document id will be appended)
    * @param config.senderAddress - the system address for sending emails
    * @param config.receiverAddress - the email endpoint for the system integration
    * @returns {EmailIntegrator}
@@ -20,34 +20,34 @@
   /**
    * Formats case data for email body
    * @param id
-   * @param title - The case title
-   * @param description - the case description
+   * @param title - The title
+   * @param description - The description
    * @returns {string}
    */
   EmailIntegrator.prototype.formatMessage = function (id, title, description) {
     /*jslint unparam:true*/
     var
-      link = this.config.caseViewUrl + '/' + id;
+      link = this.config.baseUrl + '/' + id;
 
-    return '\n\n Description: ' + (description || 'A new case has been submitted.') +
-      '\n\n View case: ' + link;
+    return '\n\n Description: ' + (description || '') +
+      '\n\n View: ' + link;
   };
 
   /**
    *
-   * @param id - id of the new case
-   * @param title - The case title
-   * @param description - the case description
+   * @param id - id of the new document
+   * @param title - The title
+   * @param description - The description
    * @param callback
    */
-  EmailIntegrator.prototype.createCase = function (id, title, description, callback) {
+  EmailIntegrator.prototype.create = function (id, title, description, callback) {
     var
       transporter = this.nodemailer.createTransport(),
       message = this.formatMessage(id, title, description),
       options = {
         from: this.config.senderAddress,
         to: this.config.receiverAddress,
-        subject: 'New Case in Glazr Capture: Case ' + id,
+        subject: title || '',
         text: message
       };
     transporter.sendMail(options, callback);

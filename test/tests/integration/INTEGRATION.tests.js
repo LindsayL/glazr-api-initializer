@@ -67,40 +67,40 @@
         });
       });
 
-      describe('request caseIntegrator component', function () {
+      describe('request integrator component', function () {
         beforeEach(function () {
           config = {
             organization: 'BlahLtd'
           };
         });
         describe('with minimal orgConfig', function () {
-          it('should initialize the default caseIntegrator', function () {
+          it('should initialize the default integrator', function () {
             apiInitializer = new ApiInitializer(config);
-            apiInitializer.initComponents(appName, apiName, thisObject, ['caseIntegrator']);
-            should.exist(thisObject.caseIntegrator);
+            apiInitializer.initComponents(appName, apiName, thisObject, ['integrator']);
+            should.exist(thisObject.integrator);
             //Check that it is MultiFile
-            thisObject.caseIntegrator.type.should.equal('Empty');
+            thisObject.integrator.type.should.equal('Empty');
           });
         });
         describe('with default orgConfig', function () {
-          it('should initialize the orgConfigs default caseIntegrator', function () {
-            config.caseIntegrator = {
+          it('should initialize the orgConfigs default integrator', function () {
+            config.integrator = {
               type: 'Email',
               config: {
                 'captureViewUrl': 'somewhere'
               }
             };
             apiInitializer = new ApiInitializer(config);
-            apiInitializer.initComponents(appName, apiName, thisObject, ['caseIntegrator']);
-            should.exist(thisObject.caseIntegrator);
-            thisObject.caseIntegrator.type.should.equal('Email');
+            apiInitializer.initComponents(appName, apiName, thisObject, ['integrator']);
+            should.exist(thisObject.integrator);
+            thisObject.integrator.type.should.equal('Email');
           });
         });
         describe('with api specific config', function () {
-          it('should initialize the api specific caseIntegrator', function () {
+          it('should initialize the api specific integrator', function () {
             config[appName] = {};
             config[appName][apiName] = {
-              caseIntegrator: {
+              integrator: {
                 type: 'Email',
                 config: {
                   'captureViewUrl': 'somewhere'
@@ -108,9 +108,9 @@
               }
             };
             apiInitializer = new ApiInitializer(config);
-            apiInitializer.initComponents(appName, apiName, thisObject, ['caseIntegrator']);
-            should.exist(thisObject.caseIntegrator);
-            thisObject.caseIntegrator.type.should.equal('Email');
+            apiInitializer.initComponents(appName, apiName, thisObject, ['integrator']);
+            should.exist(thisObject.integrator);
+            thisObject.integrator.type.should.equal('Email');
           });
         });
       });

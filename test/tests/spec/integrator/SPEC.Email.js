@@ -35,11 +35,11 @@
           desc = 'describing',
           message;
         beforeEach(function () {
-          adapter.config.caseViewUrl = url;
+          adapter.config.baseUrl = url;
           message = adapter.formatMessage(id, 'bleh', desc);
         });
         it('should contain the correct link', function () {
-          message.indexOf(url + '/' + id).should.be.greaterThan(-1);
+          message.indexOf(url + '/' + id).should.not.equal(-1);
         });
         it('should contain the passed description', function () {
           message.indexOf(desc).should.be.greaterThan(-1);
@@ -62,7 +62,7 @@
           };
         });
         it('should get the message from the formatMessage method', function (done) {
-          adapter.createCase('', '', '', function (msg) {
+          adapter.create('', '', '', function (msg) {
             msg.should.equal(message);
             done();
           });
