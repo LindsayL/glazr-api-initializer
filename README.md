@@ -1,61 +1,24 @@
 # glazr-persistor
 
-#####Currently supports persistence via:
-- LocalFile 
+#####Currently supports glazr components:
+- glazr-persistor
 
 #####Usage
 ```
-var 
-  Persistor = require('glazr-persistor'),
-  persistor,
-  options;
-  
-  // More option configurations are defined in the readme....
-  options = {
-    type: 'LocalFile',
-    config: {
-      filePaht: 'some/path/file.txt'
-      }
-    };
-  
-  persistor = new Persistor(options);
+var
+  initializer = new (require('glazr-api-initializer'))();
+
+// This will add a glazr-persistor object to this.persistor.
+initializer.initComponents('triageForm', orgConfig, this, ['persistor']);
 ```
 
-### create(record, callback)
-######@param {object} record - The object to create.
-######@param {function(err, id)} callback
+### initComponents(apiName, orgConfig, thisObject, requiredComponents
+######@param {string} apiName - The name of the api we getting components for.
+######@param {object} orgConfig - The complete organization configuration.
+######@param {object} thisObject - The "this" object of the api you are initializing.  Will initialize a param in 'this' for each recognized component.
+######@param {object} requiredComponents - The components to initialize on the thisObject.
 
-The callback returns the object's new id upon successful creation.
+This function attempts to initialize all the requiredComponents of the requested api.  It will first look for details about the components under the api in orgConfig, then it will look for a default config for the component at the top level, otherwise it will use a default configuration.
 
-### get(id, callback)
-######@param{string} id - The id of the record to retrieve.
-######@param{function(err, record)} callback
-
-The callback returns the record upon successful retrieval.
-
-### getAll(callback)
-######@param{function(err, records)} callback - records is expected to be an array of objects.
-
-The callback returns an array of records upon successful retrieval.
-
-### update(updatedRecord, callback)
-######@param{object} updatedRecord - Has the mandatory parameter of 'id'.
-######@param{function(err)} callback
-
-The callback returns nothing on successful update.
-
-### remove(id, callback)
-######@param{string} id
-######@param{function(err)} callback
-
-The callback returns nothing on successful removal of the record.
-
-## LocalFile
-```
-options = {
-  type: 'LocalFile',
-  config: {
-    filePath: 'some/path/toaFile.txt'
-    }
-  };
-```
+######Defaults
+-persistor: MultiFile type
