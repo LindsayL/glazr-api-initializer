@@ -101,10 +101,10 @@
     }
 
     CaseIntegrator = require(path.join(__dirname, 'integrator', config.type));
-    this.checkFor(['config', 'captureViewUrl'], config);
+    this.checkFor(['config', 'baseUrl'], config);
     this.checkFor(['organization'], this.orgConfig);
     config.config = config.config || {};
-    config.config.caseViewUrl = orgConfig['captureViewUrl'] + '/' + orgConfig.organization + '/case';
+    config.config.baseUrl = orgConfig.baseUrl;
 
     return new CaseIntegrator(config.config);
   };

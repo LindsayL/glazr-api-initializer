@@ -87,7 +87,7 @@
             config.integrator = {
               type: 'Email',
               config: {
-                'captureViewUrl': 'somewhere'
+                'baseUrl': 'somewhere'
               }
             };
             apiInitializer = new ApiInitializer(config);
@@ -103,7 +103,7 @@
               integrator: {
                 type: 'Email',
                 config: {
-                  'captureViewUrl': 'somewhere'
+                  'baseUrl': 'somewhere'
                 }
               }
             };
