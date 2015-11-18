@@ -21,7 +21,8 @@
       err.code = 500;
       throw err;
     }
-    this.orgConfig = orgConfig;
+    // Don't want to modify the real one ever.
+    this.orgConfig = JSON.parse(JSON.stringify(orgConfig));
   };
 
   /**
@@ -83,7 +84,7 @@
     var
       orgConfig = this.orgConfig,
       config,
-      CaseIntegrator;
+      Integrator;
 
     config = orgConfig[appName][apiName].integrator || orgConfig.integrator;
 
@@ -100,13 +101,12 @@
       };
     }
 
-    CaseIntegrator = require(path.join(__dirname, 'integrator', config.type));
+    Integrator = require(path.join(__dirname, 'integrator', config.type));
     this.checkFor(['config', 'baseUrl'], config);
     this.checkFor(['organization'], this.orgConfig);
     config.config = config.config || {};
-    config.config.baseUrl = orgConfig.baseUrl;
 
-    return new CaseIntegrator(config.config);
+    return new Integrator(config.config);
   };
 
   /**
