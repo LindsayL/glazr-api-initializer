@@ -110,19 +110,19 @@
   };
 
   /**
-   * Checks for the existence of "params" in orgConfig.
+   * Checks for the existence of "params" in "item".
    * @param {array} params - The params to check for. eg. if you want to check
    * for orgConfig.case.persistor pass ['case', persistor']
-   * @param {object} object - The object to look for the param in.
+   * @param {object} item - The object to look for the param in.
    */
-  ApiInitializer.prototype.checkFor = function (params, object) {
+  ApiInitializer.prototype.checkFor = function (params, item) {
     var
       outputString = "";
     utils.forEach(params, function (index, param) {
       /*jslint unparam:true*/
-      object = object[param];
+      item = item[param];
       outputString += param;
-      if (object === undefined || object === null) {
+      if (item === undefined || item === null) {
         var
           err = new Error('Missing the "' + outputString + '" attribute.');
         err.code = 500;
