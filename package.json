@@ -1,6 +1,6 @@
 {
   "name": "glazr-api-initializer",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Utility function for initializing glazr Api's.",
   "main": "ApiInitializer.js",
   "scripts": {
